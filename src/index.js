@@ -7,9 +7,16 @@ import { createStore } from 'redux';
 import { rootReducer } from './reducers/rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
+import { loadState, saveState } from './localStorage'
+import throttle from 'lodash/throttle'
 
-const store = createStore(rootReducer, composeWithDevTools());
+const persistedState = loadState()
+const store = createStore(rootReducer,persistedState, composeWithDevTools());
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();
 
-
+store.subscribe(throttle(() => {
+    saveState({
+        todos: store.getState().todos
+    })
+}, 1000))
