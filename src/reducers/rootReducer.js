@@ -1,18 +1,16 @@
 import { todoReducer } from './todo/todoReducer';
 import { visibilityFilterReducer } from './filter/filterReducer';
 
-export const rootReducer = (state = {}, action) => {
-    return {
-        todos: todoReducer(
-            state.todos,
-            action
-        ),
-        visibilityFilter: visibilityFilterReducer(
-            state.visibilityFilter,
-            action
-        )
-    };
-};
+export const rootReducer = (state = {}, action) => ({
+    todos: todoReducer(
+        state.todos,
+        action
+    ),
+    visibilityFilter: visibilityFilterReducer(
+        state.visibilityFilter,
+        action
+    )
+});
 
 /*
 
