@@ -1,15 +1,15 @@
-import { todoVisibility } from '../constants/commonConstants'
+import { filterPaths } from '../constants/commonConstants'
 
 export const getVisibleTodos = (todos, filter) => {
     switch (filter) {
-        case todoVisibility.SHOW_ALL:
+        case filterPaths.ALL:
             return todos;
-        case todoVisibility.SHOW_COMPLETED:
+        case filterPaths.COMPLETED:
             // Use the `Array.filter()` method
             return todos.filter(
                 t => t.completed
             );
-        case todoVisibility.SHOW_ACTIVE:
+        case filterPaths.ACTIVE:
             return todos.filter(
                 t => !t.completed
             );

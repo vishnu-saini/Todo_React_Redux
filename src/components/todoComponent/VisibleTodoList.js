@@ -3,10 +3,10 @@ import { getVisibleTodos } from '../../containers/getVisibleTodos';
 import { connect } from 'react-redux';
 import { toggleTodo } from '../../actions/todoActions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
     todos: getVisibleTodos(
         state.todos,
-        state.visibilityFilter
+        ownProps.filter
     )
 });
 

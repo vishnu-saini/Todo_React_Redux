@@ -1,11 +1,11 @@
 import React from 'react';
-import { todoVisibility } from '../../constants/commonConstants';
-import FilterLink from '../../components/filterComponent/FilterLink';
+import { filterPaths } from '../../constants/commonConstants';
+import { FilterLink } from '../../components/filterComponent/FilterLink';
 
 export const FilterContainer = () => (
     <p>Show:
-        {' '}<FilterLink filter={todoVisibility.SHOW_ALL} >All</FilterLink>
-        {' '}<FilterLink filter={todoVisibility.SHOW_ACTIVE}> Active </FilterLink>
-        {' '}<FilterLink filter={todoVisibility.SHOW_COMPLETED} > Completed </FilterLink>
+        {' '}<FilterLink filter={filterPaths.ALL} >All</FilterLink>
+        {' '}<FilterLink filter={filterPaths.ACTIVE}> Active </FilterLink>
+        {' '}<FilterLink filter={filterPaths.COMPLETED} > Completed </FilterLink>
     </p>
 );

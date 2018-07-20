@@ -1,13 +1,8 @@
 import { todoReducer } from './todo/todoReducer';
-import { visibilityFilterReducer } from './filter/filterReducer';
 
 export const rootReducer = (state = {}, action) => ({
     todos: todoReducer(
         state.todos,
-        action
-    ),
-    visibilityFilter: visibilityFilterReducer(
-        state.visibilityFilter,
         action
     )
 });

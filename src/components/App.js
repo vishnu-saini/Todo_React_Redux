@@ -5,13 +5,13 @@ import React from 'react';
 import AddTodo from '../containers/todoContainers/AddTodo';
 import { FilterContainer } from '../containers/filterContainers/FilterContainer';
 
-import {VisibleTodoList} from './todoComponent/VisibleTodoList';
+import { VisibleTodoList } from './todoComponent/VisibleTodoList';
 
-const App = () => (
+const App = ({ match }) => (
   <div>
     <AddTodo />
     <FilterContainer />
-    <VisibleTodoList />
+    <VisibleTodoList filter={match.params.filter || 'all'} />
   </div >
 );
 
