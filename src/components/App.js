@@ -7,11 +7,11 @@ import { FilterContainer } from '../containers/filterContainers/FilterContainer'
 
 import { VisibleTodoList } from './todoComponent/VisibleTodoList';
 
-const App = ({ match }) => (
+const App = () => (
   <div>
     <AddTodo />
     <FilterContainer />
-    <VisibleTodoList filter={match.params.filter || 'all'} />
+    <VisibleTodoList />
   </div >
 );
 
