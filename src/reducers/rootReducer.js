@@ -1,4 +1,4 @@
-import { todoReducer } from './todo/todoReducer';
+import todoReducer, * as fromTodoReducer from './todo/todoReducer';
 
 export const rootReducer = (state = {}, action) => ({
     todos: todoReducer(
@@ -19,3 +19,6 @@ const rootReducer = combineReducers({
 }); 
 
 */
+
+export const getVisibleTodos = (state, filter) =>
+    fromTodoReducer.getVisibleTodos(state.todos, filter);
