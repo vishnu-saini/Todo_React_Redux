@@ -1,4 +1,4 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './reducers/rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -29,20 +29,17 @@ const promise = (store) => (next) => (action) => {
 
 
 const configureStore = () => {
-  const store = createStore(rootReducer, composeWithDevTools())
   const middlewares = [promise];
-
   if (process.env.NODE_ENV !== 'production') {
     middlewares.push(addLoggingToDispatch);
   }
 
-  wrapDispatchWithMiddlewares(store, middlewares);
-  return store
+  return createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(...middlewares))
+  );
 }
-const wrapDispatchWithMiddlewares = (store, middlewares) =>
-  middlewares.slice().reverse().forEach(middleware => {
-    store.dispatch = middleware(store)(store.dispatch);
-  });
+
 export default configureStore
 
 
