@@ -1,16 +1,15 @@
 import { toDoActions } from '../../constants/actionNames';
 import { filterPaths } from '../../constants/commonConstants';
 import { combineReducers } from 'redux';
-import todo from './todo';
 
-const byId = (state = [], action) => {
+const byId = (state = {}, action) => {
   switch (action.type) {
-    case toDoActions.ADD_TODO:
-    case toDoActions.TOGGLE_TODO:
-      return {
-        ...state,
-        [action.id]: todo(state[action.id], action),
-      };
+    case toDoActions.RECEIVE_TODOS: // eslint-disable-line no-case-declarations
+      const nextState = { ...state };
+      action.response.forEach(todo => {
+        nextState[todo.id] = todo;
+      });
+      return nextState;
     default:
       return state;
   }
@@ -18,42 +17,55 @@ const byId = (state = [], action) => {
 
 const allIds = (state = [], action) => {
   switch (action.type) {
-    case toDoActions.ADD_TODO:
-      return [...state, action.id];
+    case toDoActions.RECEIVE_TODOS:
+      return action.response.map(todo => todo.id);
     default:
       return state;
   }
 };
 
+const activeIds = (state = [], action) => {
+  if (action.filter !== filterPaths.ACTIVE) {
+    return state;
+  }
+  switch (action.type) {
+    case toDoActions.RECEIVE_TODOS:
+      return action.response.map(todo => todo.id);
+    default:
+      return state;
+  }
+};
+
+const completedIds = (state = [], action) => {
+  if (action.filter !== filterPaths.COMPLETED) {
+    return state;
+  }
+  switch (action.type) {
+    case toDoActions.RECEIVE_TODOS:
+      return action.response.map(todo => todo.id);
+    default:
+      return state;
+  }
+};
+
+
+const idsByFilter = combineReducers({
+  all: allIds,
+  active: activeIds,
+  completed: completedIds,
+});
+
 const todoReducer = combineReducers({
   byId,
-  allIds,
+  idsByFilter
 });
 
 export default todoReducer;
 
-const getAllTodos = (state) =>
-  state.allIds.map(id => state.byId[id]);
-
-
 export const getVisibleTodos = (state, filter) => {
-  const allTodos = getAllTodos(state);
-  switch (filter) {
-    case filterPaths.ALL:
-      return allTodos;
-    case filterPaths.COMPLETED:
-      // Use the `Array.filter()` method
-      return allTodos.filter(
-        t => t.completed
-      );
-    case filterPaths.ACTIVE:
-      return allTodos.filter(
-        t => !t.completed
-      );
-    default:
-      throw new Error(`Unknown filter: ${filter}.`);
-  }
-}
+  const ids = state.idsByFilter[filter];
+  return ids.map(id => state.byId[id]);
+};
 
 
 
