@@ -1,24 +1,23 @@
-import todoReducer, * as fromTodoReducer from './todo/todoReducer';
+import { combineReducers } from 'redux';
 
-export const rootReducer = (state = {}, action) => ({
-    todos: todoReducer(
-        state.todos,
-        action
-    )
+import {filterPaths} from '../constants/commonConstants';
+
+import createList, * as fromList from './todo/createList';
+import byId, * as fromById from './todo/byid';
+
+const listByFilter = combineReducers({
+    all: createList(filterPaths.ALL),
+    active: createList(filterPaths.ACTIVE),
+    completed: createList(filterPaths.COMPLETED),
 });
 
-/*
+export const rootReducer = combineReducers({
+    byId,
+    listByFilter 
+});
 
-// alternate way for combining reducers
 
-const { combineReducers } = Redux; // CDN Redux import
-
-const rootReducer = combineReducers({
-  todos: todoReducer,
-  visibilityFilter: visibilityFilterReducer
-}); 
-
-*/
-
-export const getVisibleTodos = (state, filter) =>
-    fromTodoReducer.getVisibleTodos(state.todos, filter);
+export const getVisibleTodos = (state, filter) => {
+    const ids = fromList.getIds(state.listByFilter[filter]);
+    return ids.map(id => fromById.getTodo(state.byId, id));
+};
