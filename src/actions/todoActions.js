@@ -8,6 +8,11 @@ export const receiveTodos = (filter, response) => ({
     response,
 });
 
+export const requestTodos = (filter) => ({
+    type: toDoActions.REQUEST_TODOS,
+    filter,
+  });
+
 export const addTodo = text => ({
     type: toDoActions.ADD_TODO,
     id: v4(),
@@ -18,6 +23,7 @@ export const toggleTodo = id => ({
     type: toDoActions.TOGGLE_TODO,
     id
 });
+
 
 
 export const fetchTodos = (filter) =>
