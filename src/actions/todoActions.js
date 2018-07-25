@@ -3,7 +3,7 @@ import { v4 } from 'node-uuid';
 import * as api from '../api'
 
 export const receiveTodos = (filter, response) => ({
-    type: 'RECEIVE_TODOS',
+    type: toDoActions.RECEIVE_TODOS,
     filter,
     response,
 });
@@ -22,6 +22,6 @@ export const toggleTodo = id => ({
 
 export const fetchTodos = (filter) =>
     api.fetchTodos(filter).then(response =>
-        receiveTodos(filter, response)
+       receiveTodos(filter, response)
     );
 
