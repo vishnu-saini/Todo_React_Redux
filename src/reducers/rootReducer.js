@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import {filterPaths} from '../constants/commonConstants';
+import { filterPaths } from '../constants/commonConstants';
 
 import createList, * as fromList from './todo/createList';
 import byId, * as fromById from './todo/byid';
@@ -13,7 +13,7 @@ const listByFilter = combineReducers({
 
 export const rootReducer = combineReducers({
     byId,
-    listByFilter 
+    listByFilter
 });
 
 
@@ -23,4 +23,7 @@ export const getVisibleTodos = (state, filter) => {
 };
 
 export const getIsFetching = (state, filter) =>
-  fromList.getIsFetching(state.listByFilter[filter]);
+    fromList.getIsFetching(state.listByFilter[filter]);
+
+export const getErrorMessage = (state, filter) =>
+    fromList.getErrorMessage(state.listByFilter[filter]);
