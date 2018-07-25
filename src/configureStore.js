@@ -27,9 +27,15 @@ const promise = (store) => (next) => (action) => {
   return next(action);
 };
 
+const thunk = (store) => (next) => (action) =>
+  typeof action === 'function' ?
+    action(store.dispatch, store.getState) :
+    next(action);
+
 
 const configureStore = () => {
-  const middlewares = [promise];
+  const middlewares = [thunk];
+  middlewares.push(promise);
   if (process.env.NODE_ENV !== 'production') {
     middlewares.push(addLoggingToDispatch);
   }

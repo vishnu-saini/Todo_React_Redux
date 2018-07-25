@@ -1,4 +1,5 @@
-import { toDoActions } from '../constants/actionNames'
+import { toDoActions } from '../constants/actionNames';
+import { getIsFetching } from '../reducers/rootReducer';
 import { v4 } from 'node-uuid';
 import * as api from '../api'
 
@@ -11,7 +12,7 @@ export const receiveTodos = (filter, response) => ({
 export const requestTodos = (filter) => ({
     type: toDoActions.REQUEST_TODOS,
     filter,
-  });
+});
 
 export const addTodo = text => ({
     type: toDoActions.ADD_TODO,
@@ -26,8 +27,13 @@ export const toggleTodo = id => ({
 
 
 
-export const fetchTodos = (filter) =>
-    api.fetchTodos(filter).then(response =>
-       receiveTodos(filter, response)
-    );
+export const fetchTodos = (filter) => (dispatch , getState ) => {
+     if (getIsFetching(getState(), filter)) {
+        return Promise.resolve();
+    } 
+    dispatch(requestTodos(filter));
 
+    return api.fetchTodos(filter).then(response => {
+        dispatch(receiveTodos(filter, response));
+    });
+};
