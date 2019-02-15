@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import TodoList from '../../containers/todoContainers/TodoList';
+import TodoList from '../../components/todo/TodoList';
 import {
     getVisibleTodos,
     getErrorMessage,
     getIsFetching
 } from '../../reducers/rootReducer';
 import * as todoActions from '../../actions/todoActions';
-import FetchError from '../../containers/todoContainers/FetchError';
+import FetchError from '../../components/todo/FetchError';
 
 class VisibleTodoList extends Component {
     componentDidMount() {
