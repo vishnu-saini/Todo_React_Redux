@@ -2,10 +2,10 @@
 import React from 'react';
 
 // component imports
-import AddTodo from '../containers/todoContainers/AddTodo';
-import FilterContainer from '../containers/filterContainers/FilterContainer';
+import AddTodo from '../components/todo/AddTodo';
+import FilterContainer from '../components/filter/FilterComponent';
 
-import VisibleTodoList from './todoComponent/VisibleTodoList';
+import VisibleTodoList from './todo/VisibleTodoList';
 
 const App = () => (
     <div>

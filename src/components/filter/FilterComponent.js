@@ -1,6 +1,6 @@
 import React from 'react';
 import { filterPaths } from '../../constants/commonConstants';
-import FilterLink from '../../components/filterComponent/FilterLink';
+import FilterLink from '../../containers/filter/FilterLink';
 
 const FilterContainer = () => (
     <p>
