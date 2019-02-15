@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { TodoList } from '../../containers/todoContainers/TodoList';
-import { getVisibleTodos, getErrorMessage, getIsFetching } from '../../reducers/rootReducer';
 import { connect } from 'react-redux';
-import * as todoActions from '../../actions/todoActions';
 import { withRouter } from 'react-router-dom';
-import { FetchError } from '../../containers/todoContainers/FetchError'
+import TodoList from '../../containers/todoContainers/TodoList';
+import {
+    getVisibleTodos,
+    getErrorMessage,
+    getIsFetching
+} from '../../reducers/rootReducer';
+import * as todoActions from '../../actions/todoActions';
+import FetchError from '../../containers/todoContainers/FetchError';
 
 class VisibleTodoList extends Component {
     componentDidMount() {
@@ -12,14 +16,15 @@ class VisibleTodoList extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.filter !== prevProps.filter) {
+        const { filter } = this.props;
+        if (filter !== prevProps.filter) {
             this.fetchData();
         }
     }
 
     fetchData() {
         const { filter, fetchTodos } = this.props;
-        fetchTodos(filter).then(() => console.log('done!'));
+        fetchTodos(filter).then();
     }
 
     render() {
@@ -37,24 +42,18 @@ class VisibleTodoList extends Component {
         if (isFetching && !todos.length) {
             return <p>Loading...</p>;
         }
-        return (
-            <TodoList
-                todos={todos}
-                onTodoClick={toggleTodo}
-            />
-        );
+        return <TodoList todos={todos} onTodoClick={toggleTodo} />;
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
-
     const filter = ownProps.match.params.filter || 'all';
     return {
         isFetching: getIsFetching(state, filter),
         errorMessage: getErrorMessage(state, filter),
         todos: getVisibleTodos(state, filter),
         filter
-    }
+    };
 };
 
 /* const mapDispatchToProps = dispatch => ({
@@ -64,10 +63,10 @@ const mapStateToProps = (state, ownProps) => {
     receiveTodos
 }); */
 
-VisibleTodoList = withRouter(connect(
-    mapStateToProps,
-    /* mapDispatchToProps */
-    todoActions
-)(VisibleTodoList));
-
-export default VisibleTodoList;
+export default withRouter(
+    connect(
+        mapStateToProps,
+        /* mapDispatchToProps */
+        todoActions
+    )(VisibleTodoList)
+);

@@ -1,23 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {addTodo} from '../../actions/todoActions'
+import { addTodo } from '../../actions/todoActions';
 
-let AddTodo = ({ dispatch }) => {
-  let input;
+const AddTodo = ({ dispatch }) => {
+    let input;
 
-  return (
-    <div>
-      <input ref={node => {
-        input = node;
-      }} />
-      <button onClick={() => {
-        dispatch(addTodo(input.value))
-        input.value = '';
-      }}>
-        Add Todo
-        </button>
-    </div>
-  );
+    return (
+        <div>
+            <input
+                ref={node => {
+                    input = node;
+                }}
+            />
+            <button
+                type="button"
+                onClick={() => {
+                    dispatch(addTodo(input.value));
+                    input.value = '';
+                }}
+            >
+                Add Todo
+            </button>
+        </div>
+    );
 };
 
 /* 
@@ -40,6 +45,6 @@ AddTodo = connect(
 
 */
 
+// Now the default behavior to not subscribe to the store, and inject dispatch as a prop.
 
-//Now the default behavior to not subscribe to the store, and inject dispatch as a prop.
 export default connect()(AddTodo);
