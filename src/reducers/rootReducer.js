@@ -8,14 +8,13 @@ import byId, * as fromById from './todo/byid';
 const listByFilter = combineReducers({
     all: createList(filterPaths.ALL),
     active: createList(filterPaths.ACTIVE),
-    completed: createList(filterPaths.COMPLETED),
+    completed: createList(filterPaths.COMPLETED)
 });
 
 export const rootReducer = combineReducers({
     byId,
     listByFilter
 });
-
 
 export const getVisibleTodos = (state, filter) => {
     const ids = fromList.getIds(state.listByFilter[filter]);

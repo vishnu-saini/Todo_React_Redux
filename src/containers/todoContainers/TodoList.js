@@ -1,18 +1,17 @@
 import React from 'react';
 
-import {Todo} from './Todo';
+import { Todo } from './Todo';
 
-export const TodoList = ({
-    todos,
-    onTodoClick
-  }) => (
+const TodoList = ({ todos, onTodoClick }) => (
     <ul>
-      {todos.map(todo =>
-        <Todo
-          key={todo.id}
-          {...todo}
-          onClick={() => onTodoClick(todo.id)}
-        />
-      )}
+        {todos.map(todo => (
+            <Todo
+                key={todo.id}
+                {...todo}
+                onClick={() => onTodoClick(todo.id)}
+            />
+        ))}
     </ul>
-  )
+);
+
+export default TodoList;

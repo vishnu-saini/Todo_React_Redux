@@ -2,13 +2,13 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export const FilterLink = ({ filter, children }) => (
+const FilterLink = ({ filter, children }) => (
     <NavLink
         exact
-        to={'/' + (filter === 'all' ? '' : filter)}
+        to={`/${filter === 'all' ? '' : filter}`}
         activeStyle={{
             textDecoration: 'none',
-            color: 'black',
+            color: 'black'
         }}
     >
         {children}
@@ -16,6 +16,8 @@ export const FilterLink = ({ filter, children }) => (
 );
 
 FilterLink.propTypes = {
-  filter: PropTypes.oneOf(['all', 'completed', 'active']).isRequired,
-  children: PropTypes.node.isRequired,
+    filter: PropTypes.oneOf(['all', 'completed', 'active']).isRequired,
+    children: PropTypes.node.isRequired
 };
+
+export default FilterLink;
